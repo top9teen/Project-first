@@ -9,8 +9,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-
+import com.bru.model.MoneyBean;
 import com.bru.model.RegisterallBean;
+import com.bru.model.UserAllBean;
 import com.bru.util.ConnectDB;
 
 @Repository
@@ -74,7 +75,7 @@ public class UsertableDao {
 		StringBuilder sql = new StringBuilder();
 		Connection conn = con.openConnect();
 		try {
-			sql.append(" SELECT * FROM  registerall WHERE reg_firstname = ? ");
+			sql.append(" SELECT * FROM  registerall WHERE reg_email = ? ");
 			prepared = conn.prepareStatement(sql.toString());
 			prepared.setString(1, fname);
 			ResultSet rs = prepared.executeQuery();
@@ -130,7 +131,7 @@ public class UsertableDao {
 		Connection conn = con.openConnect();
 
 		try {
-			sql.append(" SELECT * FROM  registerall WHERE reg_firstname = ? ");
+			sql.append(" SELECT * FROM  registerall WHERE reg_email = ? ");
 			prepared = conn.prepareStatement(sql.toString());
 			prepared.setString(1, fname);
 			ResultSet rs = prepared.executeQuery();
@@ -181,6 +182,62 @@ public class UsertableDao {
 		
 	}
 		return list ;
+	}
+	
+	
+	public MoneyBean gansel(String gansel)  throws SQLException {
+
+		MoneyBean bean = new MoneyBean();
+		ConnectDB con = new ConnectDB();
+		PreparedStatement prepared = null;
+		StringBuilder sql = new StringBuilder();
+		Connection conn = con.openConnect();
+
+		try {
+			sql.append(" SELECT * FROM  money WHERE mo_idcradmoney = ? ");
+			prepared = conn.prepareStatement(sql.toString());
+			prepared.setString(1, gansel);
+
+			ResultSet rs = prepared.executeQuery();
+			while (rs.next()) {
+				bean.setMoIdcradmoney(rs.getString("mo_idcradmoney"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			conn.close();
+		}
+		return bean;
+
+	}
+	public UserAllBean emails(String gansel)  throws SQLException {
+
+		UserAllBean bean = new UserAllBean();
+		ConnectDB con = new ConnectDB();
+		PreparedStatement prepared = null;
+		StringBuilder sql = new StringBuilder();
+		Connection conn = con.openConnect();
+
+		try {
+			sql.append(" SELECT * FROM  userall WHERE us_username = ? ");
+			prepared = conn.prepareStatement(sql.toString());
+			prepared.setString(1, gansel);
+
+			ResultSet rs = prepared.executeQuery();
+			while (rs.next()) {
+				bean.setUsUsername(rs.getString("us_username"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			conn.close();
+		}
+		return bean;
+
 	}
 	//end class
 }

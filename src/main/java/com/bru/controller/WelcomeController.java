@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bru.dao.CarDao;
 import com.bru.dao.CustomerDao;
+import com.bru.dao.HistoryDao;
 import com.bru.dao.MenberDao;
 import com.bru.dao.RegisterDao;
 import com.bru.dao.UserAllDao;
 import com.bru.dao.UsertableDao;
+import com.bru.model.AmountBean;
 import com.bru.model.ColeridcardBean;
 import com.bru.model.KasikornPriceBean;
 import com.bru.model.KrungsriPriceBean;
+import com.bru.model.MoneyBean;
 import com.bru.model.MsgadminBean;
 import com.bru.model.RegisterallBean;
 import com.bru.model.RegnameBean;
@@ -29,7 +32,6 @@ import com.bru.model.ScbeasyPriceBean;
 import com.bru.model.SimBean;
 import com.bru.model.ThanachartPriceBean;
 import com.bru.model.UserAllBean;
-
 
 @Controller
 public class WelcomeController {
@@ -45,10 +47,14 @@ public class WelcomeController {
 	CarDao carDao;
 	@Autowired
 	UsertableDao usertableDao;
+	@Autowired
+	HistoryDao historyDao;
 
 	String uu = "";
 	String fname, lname;
 	String imgall = "";
+	String email = "";
+	String nn = "";
 
 	@RequestMapping("/Hello")
 	public String hel(Model model) {
@@ -66,6 +72,7 @@ public class WelcomeController {
 	public String select(Model model) {
 		model.addAttribute("msg", "");
 		model.addAttribute("box", "select");
+		model.addAttribute("gg", "");
 		return "welcome";
 	}
 
@@ -74,12 +81,12 @@ public class WelcomeController {
 
 		model.addAttribute("msg", "");
 		model.addAttribute("box", "car");
-
+		model.addAttribute("gg", "");
 		return "welcome";
 	}
 
 	@RequestMapping("/gototabel")
-	public String gototabel(Model model, String name, HttpServletRequest requst) throws SQLException{
+	public String gototabel(Model model, String name, HttpServletRequest requst) throws SQLException {
 		name = uu;
 		List<RegisterallBean> list = new ArrayList<>();
 
@@ -87,14 +94,15 @@ public class WelcomeController {
 
 		requst.getSession().setAttribute("listUser", list);
 		model.addAttribute("se", "1");
-		
+
 		model.addAttribute("head", "3");
 		model.addAttribute("dd", "");
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 	}
 
 	@RequestMapping("/gotofist")
-	public String gotofist(Model model, String name, HttpServletRequest requst)throws SQLException {
+	public String gotofist(Model model, String name, HttpServletRequest requst) throws SQLException {
 		name = uu;
 		List<RegisterallBean> list = new ArrayList<>();
 
@@ -102,18 +110,20 @@ public class WelcomeController {
 
 		requst.getSession().setAttribute("listUser", list);
 		model.addAttribute("se", "2");
-	
+
 		model.addAttribute("head", "3");
 		model.addAttribute("dd", "");
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 	}
 
 	@RequestMapping("/selidcard")
 	public String selidcard(Model model) {
-		
+
 		model.addAttribute("head", "4");
 		model.addAttribute("dd", "");
 		model.addAttribute("se", "3");
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 	}
 
@@ -123,26 +133,35 @@ public class WelcomeController {
 		model.addAttribute("se", "5");
 		model.addAttribute("dd", "");
 		model.addAttribute("head", "3");
+		nn = "3";
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 	}
+
 	@RequestMapping("/msg4")
 	public String msgdd(Model model) {
 
 		model.addAttribute("se", "5");
 		model.addAttribute("dd", "");
 		model.addAttribute("head", "2");
+		nn = "2";
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 	}
+
 	@RequestMapping("/msg3")
 	public String msg3(Model model) {
 
 		model.addAttribute("se", "5");
 		model.addAttribute("dd", "");
 		model.addAttribute("head", "4");
+		nn = "4";
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 	}
+
 	@RequestMapping("/gotofist2")
-	public String gotofist2(Model model, String name, HttpServletRequest requst)throws SQLException {
+	public String gotofist2(Model model, String name, HttpServletRequest requst) throws SQLException {
 		name = uu;
 		List<RegisterallBean> list = new ArrayList<>();
 
@@ -150,17 +169,16 @@ public class WelcomeController {
 
 		requst.getSession().setAttribute("listUser", list);
 		model.addAttribute("se", "31");
-	
+
 		model.addAttribute("head", "4");
 		model.addAttribute("dd", "");
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 	}
 
-	
-
 	@RequestMapping("/gotomsg")
 	public String msgg(Model model, String name, String msghard, String msgbody) {
-		name = uu;
+		name = email;
 		MsgadminBean bean = new MsgadminBean();
 		bean.setMsName(name);
 		bean.setMsMsgbody(msgbody);
@@ -171,10 +189,26 @@ public class WelcomeController {
 			menberDao.sssss(bean);
 			model.addAttribute("se", "5");
 			model.addAttribute("dd", "L");
+			if (nn.equals("4")) {
+				model.addAttribute("head", "4");
+			} else if (nn.equals("2")) {
+				model.addAttribute("head", "2");
+			} else if (nn.equals("3")) {
+				model.addAttribute("head", "3");
+			}
 		} catch (Exception e) {
+			if (nn.equals("4")) {
+				model.addAttribute("head", "4");
+			} else if (nn.equals("2")) {
+				model.addAttribute("head", "2");
+			} else if (nn.equals("3")) {
+				model.addAttribute("head", "3");
+			}
 			model.addAttribute("se", "5");
 			model.addAttribute("dd", "G");
+
 		}
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 	}
 
@@ -216,6 +250,7 @@ public class WelcomeController {
 		reqest.getSession().setAttribute("scbean", scbean);
 		reqest.getSession().setAttribute("thbean", thbean);
 		reqest.getSession().setAttribute("simbean", bb);
+		model.addAttribute("gg", "");
 		return lin;
 	}
 
@@ -271,7 +306,7 @@ public class WelcomeController {
 	public String welcome(Model model) {
 		model.addAttribute("box", "");
 		model.addAttribute("msg", "");
-
+		model.addAttribute("gg", "");
 		return "welcome";
 	}
 
@@ -285,19 +320,21 @@ public class WelcomeController {
 
 				if (bean.getUsRole().equals("1")) {
 					uu = bean.getUsRights();
-					outhen = "welcomeAdmin";
+					email = bean.getUsUsername();
+					outhen = "admin/welcomeAdmin";
 				} else if (bean.getUsRole().equals("2")) {
 					model.addAttribute("se", "");
 					model.addAttribute("head", "2");
 					model.addAttribute("dd", "");
-					imgall =bean.getUsImg();
+					email = bean.getUsUsername();
+					imgall = bean.getUsImg();
 					uu = bean.getUsRights();
 					outhen = "welcomeMember";
 				} else if (bean.getUsRole().equals("5")) {
 					model.addAttribute("box", "");
 					model.addAttribute("msg", "0");
 					uu = bean.getUsRights();
-					
+					email = bean.getUsUsername();
 					fname = bean.getUsFname();
 					lname = bean.getUsLname();
 					outhen = "welcome";
@@ -305,18 +342,19 @@ public class WelcomeController {
 					model.addAttribute("se", "");
 					model.addAttribute("head", "3");
 					model.addAttribute("dd", "");
+					email = bean.getUsUsername();
 					uu = bean.getUsRights();
-					imgall =bean.getUsImg();
+					imgall = bean.getUsImg();
 					outhen = "welcomeMember";
-				}else if (bean.getUsRole().equals("4")) {
+				} else if (bean.getUsRole().equals("4")) {
 					model.addAttribute("se", "");
 					model.addAttribute("dd", "");
 					model.addAttribute("head", "4");
-					imgall =bean.getUsImg();
+					email = bean.getUsUsername();
+					imgall = bean.getUsImg();
 					uu = bean.getUsRights();
 					outhen = "welcomeMember";
 				}
-
 
 			} else {
 				model.addAttribute("messessError", "F");
@@ -327,6 +365,7 @@ public class WelcomeController {
 			e.printStackTrace();
 		}
 		request.getSession().setAttribute("Login", bean);
+		model.addAttribute("gg", "");
 		return outhen;
 	}
 
@@ -349,55 +388,55 @@ public class WelcomeController {
 		RegisterallBean bean = new RegisterallBean();
 		try {
 			registerDao.update2(regid);
-			bean=registerDao.sel(regid);
+			bean = registerDao.sel(regid);
 			if (bean.getRegId() != 0) {
-				
-				
+
 			}
 
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
+
 		model.addAttribute("se", "");
 		model.addAttribute("head", "3");
 		model.addAttribute("dd", "update");
 		res.getSession().setAttribute("resultBean", bean);
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 
 	}
-
 
 	@RequestMapping(value = "/gotoUpdate5", method = RequestMethod.POST)
 	public String gotoUpdate5(Model model, String regid, HttpServletRequest res) {
 		RegisterallBean bean = new RegisterallBean();
 		try {
 			registerDao.update2(regid);
-			bean=registerDao.sel(regid);
+			bean = registerDao.sel(regid);
 			if (bean.getRegId() != 0) {
-				
-				
+
 			}
 
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
+
 		model.addAttribute("se", "");
 		model.addAttribute("head", "4");
 		model.addAttribute("dd", "update3");
 		res.getSession().setAttribute("resultBean", bean);
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 
 	}
+
 	@RequestMapping(value = "/gotoUpdate2", method = RequestMethod.POST)
 	public String gotoUpdate2(Model model, String regid, HttpServletRequest res) {
 		RegisterallBean bean = new RegisterallBean();
 		try {
 			registerDao.update2(regid);
-			bean=registerDao.sel(regid);
+			bean = registerDao.sel(regid);
 			if (bean.getRegId() != 0) {
 
 			}
@@ -410,14 +449,16 @@ public class WelcomeController {
 		model.addAttribute("head", "3");
 		model.addAttribute("dd", "update2");
 		res.getSession().setAttribute("resultBean", bean);
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 	}
+
 	@RequestMapping(value = "/gotoUpdate31", method = RequestMethod.POST)
 	public String gotoUpdate31(Model model, String regid, HttpServletRequest res) {
 		RegisterallBean bean = new RegisterallBean();
 		try {
 			registerDao.update31(regid);
-			bean=registerDao.sel(regid);
+			bean = registerDao.sel(regid);
 			if (bean.getRegId() != 0) {
 
 			}
@@ -430,6 +471,7 @@ public class WelcomeController {
 		model.addAttribute("head", "4");
 		model.addAttribute("dd", "update31");
 		res.getSession().setAttribute("resultBean", bean);
+		model.addAttribute("gg", "");
 		return "welcomeMember";
 	}
 
@@ -480,7 +522,7 @@ public class WelcomeController {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-
+		model.addAttribute("gg", "");
 		return gg;
 	}
 
@@ -524,6 +566,7 @@ public class WelcomeController {
 		bran.setName(name);
 		bran.setFname(fname);
 		bran.setLname(lname);
+		bran.setEmail(email);
 		request.getSession().setAttribute("simbean", bran);
 		return "registercar";
 	}
@@ -532,14 +575,17 @@ public class WelcomeController {
 	public String rester(@ModelAttribute("SpringWeb") UserAllBean bean, String fristName, String lastName,
 			String username, String password, Model model) {
 		String oo = "";
+		int mos = 0;
+		AmountBean mo = new AmountBean();
 		try {
-			bean = userAllDao.login(username, fristName);
+			bean = usertableDao.emails(username);
 			if (bean.getUsUsername() != null) {
-				model.addAttribute("SE", "M");
+				model.addAttribute("SE", "F");
 				oo = "resiter";
 			} else {
 				try {
-
+					mo.setAmMoney(mos);
+					mo.setAmEmail(username);
 					bean.setUsFname(fristName);
 					bean.setUsLname(lastName);
 					bean.setUsUsername(username);
@@ -550,6 +596,7 @@ public class WelcomeController {
 					bean.setUsCreatedate(new Date());
 					try {
 						menberDao.rester(bean);
+						menberDao.resterdsdd(mo);
 						model.addAttribute("SE", "S");
 						oo = "resiter";
 
@@ -577,30 +624,31 @@ public class WelcomeController {
 	}
 
 	@RequestMapping(value = "gotolistcar")
-	public String gotolistcar(Model model, HttpServletRequest requst)throws SQLException {
+	public String gotolistcar(Model model, HttpServletRequest requst) throws SQLException {
 		List<RegisterallBean> list = new ArrayList<>();
 		list = usertableDao.findallist(uu);
 
 		requst.getSession().setAttribute("listUser", list);
 		model.addAttribute("box", "");
 		model.addAttribute("msg", "7");
-
+		model.addAttribute("gg", "");
 		return "welcome";
 	}
-	
+
 	@RequestMapping(value = "gotolistcar2")
-	public String gotolistcar2(Model model, HttpServletRequest requst)throws SQLException {
+	public String gotolistcar2(Model model, HttpServletRequest requst) throws SQLException {
 		List<RegisterallBean> list = new ArrayList<>();
 		list = usertableDao.findallist2(uu);
 
 		requst.getSession().setAttribute("listUser", list);
 		model.addAttribute("box", "");
 		model.addAttribute("msg", "10");
-
+		model.addAttribute("gg", "");
 		return "welcome";
 	}
-	@RequestMapping(value ="gotocked",method = RequestMethod.POST)
-	public String gotocked (Model model ,HttpServletRequest res , String regid) {
+
+	@RequestMapping(value = "gotocked", method = RequestMethod.POST)
+	public String gotocked(Model model, HttpServletRequest res, String regid) {
 		RegisterallBean bean = new RegisterallBean();
 		try {
 			bean = registerDao.sel(regid);
@@ -615,10 +663,12 @@ public class WelcomeController {
 		model.addAttribute("box", "");
 		model.addAttribute("msg", "8");
 		res.getSession().setAttribute("resultBean", bean);
+		model.addAttribute("gg", "");
 		return "welcome";
 	}
-	@RequestMapping(value ="gotocked2",method = RequestMethod.POST)
-	public String gotocked2 (Model model ,HttpServletRequest res , String regid) {
+
+	@RequestMapping(value = "gotocked2", method = RequestMethod.POST)
+	public String gotocked2(Model model, HttpServletRequest res, String regid) {
 		RegisterallBean bean = new RegisterallBean();
 		try {
 			bean = registerDao.sel(regid);
@@ -633,151 +683,138 @@ public class WelcomeController {
 		model.addAttribute("box", "");
 		model.addAttribute("msg", "9");
 		res.getSession().setAttribute("resultBean", bean);
+		model.addAttribute("gg", "");
 		return "welcome";
 	}
-	
-	@RequestMapping(value ="gotodeled",method = RequestMethod.POST)
-	public String gotodeled (Model model ,HttpServletRequest res , 	String regid ,String name) throws SQLException {
-		
+
+	@RequestMapping(value = "gotodeled", method = RequestMethod.POST)
+	public String gotodeled(Model model, HttpServletRequest res, String regid, String name) throws SQLException {
+
 		name = uu;
-			 registerDao.deldete(regid);
-			
-			
-				List<RegnameBean> list = new ArrayList<>();
+		registerDao.deldete(regid);
 
-			//	list = menberDao.listuser2(name);
+		List<RegnameBean> list = new ArrayList<>();
 
-			
-				model.addAttribute("head", "3");
-				model.addAttribute("dd", "");
-				
-				res.getSession().setAttribute("listUser", list);
-				model.addAttribute("se", "2");
+		// list = menberDao.listuser2(name);
 
-				return "welcomeMember";
-		
+		model.addAttribute("head", "3");
+		model.addAttribute("dd", "");
+
+		res.getSession().setAttribute("listUser", list);
+		model.addAttribute("se", "2");
+
+		return "welcomeMember";
+
 	}
-	@RequestMapping( value = "/updateuserlist80" , method = RequestMethod.POST)
-	public String updateuserlist80(Model model,String refid,String name,HttpServletRequest requst ,String updatepried) {	
-	
-		List<RegisterallBean> list = new ArrayList<>();
-		 name = uu;
-	try {
-		
-		
 
-		
-		registerDao.updateddsd(refid,updatepried);
-		list = menberDao.listuserv65(name);
-				requst.getSession().setAttribute("listUser", list);	
-			
+	@RequestMapping(value = "/updateuserlist80", method = RequestMethod.POST)
+	public String updateuserlist80(Model model, String refid, String name, HttpServletRequest requst,
+			String updatepried) {
+
+		List<RegisterallBean> list = new ArrayList<>();
+		name = uu;
+		try {
+
+			registerDao.updateddsd(refid, updatepried);
+			list = menberDao.listuserv65(name);
+			requst.getSession().setAttribute("listUser", list);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-	model.addAttribute("se", "56");
-	model.addAttribute("head", "2");
-	model.addAttribute("dd", "");
+		model.addAttribute("se", "56");
+		model.addAttribute("head", "2");
+		model.addAttribute("dd", "");
 		return "welcomeMember";
 	}
-	
-	@RequestMapping( value = "/updateuserlist" , method = RequestMethod.POST)
-	public String updateuserlist(Model model,String refid,String name,HttpServletRequest requst ) {	
-	
-		List<RegisterallBean> list = new ArrayList<>();
-		 name = uu;
-	try {
-		
-		
 
-		
-		registerDao.update(refid);
-		list = menberDao.listuser(name);
-				requst.getSession().setAttribute("listUser", list);	
-			
+	@RequestMapping(value = "/updateuserlist", method = RequestMethod.POST)
+	public String updateuserlist(Model model, String refid, String name, HttpServletRequest requst) {
+
+		List<RegisterallBean> list = new ArrayList<>();
+		name = uu;
+		try {
+
+			registerDao.update(refid);
+			list = menberDao.listuser(name);
+			requst.getSession().setAttribute("listUser", list);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-	model.addAttribute("se", "1");
-	model.addAttribute("head", "3");
-	model.addAttribute("dd", "");
+		model.addAttribute("se", "1");
+		model.addAttribute("head", "3");
+		model.addAttribute("dd", "");
 		return "welcomeMember";
 	}
-	
-	@RequestMapping( value = "/updateuserlist2" , method = RequestMethod.POST)
-	public String updateuserlist2(Model model,String refid,String name,HttpServletRequest requst ) {	
-	
-		List<RegisterallBean> list = new ArrayList<>();
-		 name = uu;
-	try {
-		
-		
 
-		
-		registerDao.update22(refid);
-		list = menberDao.listuserss(name);
-				requst.getSession().setAttribute("listUser", list);	
-			
+	@RequestMapping(value = "/updateuserlist2", method = RequestMethod.POST)
+	public String updateuserlist2(Model model, String refid, String name, HttpServletRequest requst) {
+
+		List<RegisterallBean> list = new ArrayList<>();
+		name = uu;
+		try {
+
+			registerDao.update22(refid);
+			list = menberDao.listuserss(name);
+			requst.getSession().setAttribute("listUser", list);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-	model.addAttribute("se", "2");
-	model.addAttribute("head", "3");
-	model.addAttribute("dd", "");
+		model.addAttribute("se", "2");
+		model.addAttribute("head", "3");
+		model.addAttribute("dd", "");
 		return "welcomeMember";
 	}
-	
-	@RequestMapping( value = "/updateuserlist31" , method = RequestMethod.POST)
-	public String updateuserlist31(Model model,String refid,String name,HttpServletRequest requst ) {	
-	
-		List<RegisterallBean> list = new ArrayList<>();
-		 name = uu;
-	try {
-		
-		
 
-		
-		registerDao.update232(refid);
-		list = menberDao.listuserdddd(name);
-				requst.getSession().setAttribute("listUser", list);	
-			
+	@RequestMapping(value = "/updateuserlist31", method = RequestMethod.POST)
+	public String updateuserlist31(Model model, String refid, String name, HttpServletRequest requst) {
+
+		List<RegisterallBean> list = new ArrayList<>();
+		name = uu;
+		try {
+
+			registerDao.update232(refid);
+			list = menberDao.listuserdddd(name);
+			requst.getSession().setAttribute("listUser", list);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-	model.addAttribute("se", "31");
-	model.addAttribute("head", "4");
-	model.addAttribute("dd", "");
+		model.addAttribute("se", "31");
+		model.addAttribute("head", "4");
+		model.addAttribute("dd", "");
 		return "welcomeMember";
 	}
-	@RequestMapping( value = "/updateuserlist3" , method = RequestMethod.POST)
-	public String updateuserlist3(Model model,String refid,String name,HttpServletRequest requst ) {	
-	
-		List<RegisterallBean> list = new ArrayList<>();
-		 name = uu;
-	try {
-		
-		
 
-		
-		registerDao.update22w(refid);
-		list = menberDao.listuserv(name);
-				requst.getSession().setAttribute("listUser", list);	
-			
+	@RequestMapping(value = "/updateuserlist3", method = RequestMethod.POST)
+	public String updateuserlist3(Model model, String refid, String name, HttpServletRequest requst) {
+
+		List<RegisterallBean> list = new ArrayList<>();
+		name = uu;
+		try {
+
+			registerDao.update22w(refid);
+			list = menberDao.listuserv(name);
+			requst.getSession().setAttribute("listUser", list);
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-	model.addAttribute("se", "7");
-	model.addAttribute("head", "4");
-	model.addAttribute("dd", "");
+		model.addAttribute("se", "7");
+		model.addAttribute("head", "4");
+		model.addAttribute("dd", "");
 		return "welcomeMember";
 	}
-	
+
 	@RequestMapping("/gototabel2")
-	public String gototabel2(Model model, String name, HttpServletRequest requst) throws SQLException{
+	public String gototabel2(Model model, String name, HttpServletRequest requst) throws SQLException {
 		name = uu;
 		List<RegisterallBean> list = new ArrayList<>();
 
@@ -785,13 +822,14 @@ public class WelcomeController {
 
 		requst.getSession().setAttribute("listUser", list);
 		model.addAttribute("se", "7");
-		
+
 		model.addAttribute("head", "4");
 		model.addAttribute("dd", "");
 		return "welcomeMember";
 	}
+
 	@RequestMapping("/gototabel56")
-	public String gototabel56(Model model, String name, HttpServletRequest requst) throws SQLException{
+	public String gototabel56(Model model, String name, HttpServletRequest requst) throws SQLException {
 		name = uu;
 		List<RegisterallBean> list = new ArrayList<>();
 
@@ -799,27 +837,27 @@ public class WelcomeController {
 
 		requst.getSession().setAttribute("listUser", list);
 		model.addAttribute("se", "56");
-		
+
 		model.addAttribute("head", "2");
 		model.addAttribute("dd", "");
 		return "welcomeMember";
 	}
+
 	@RequestMapping(value = "/gotoUpdate56", method = RequestMethod.POST)
 	public String gotoUpdate56(Model model, String regid, HttpServletRequest res) {
 		RegisterallBean bean = new RegisterallBean();
 		try {
 			registerDao.update2(regid);
-			bean=registerDao.sel(regid);
+			bean = registerDao.sel(regid);
 			if (bean.getRegId() != 0) {
-				
-				
+
 			}
 
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
+
 		model.addAttribute("se", "");
 		model.addAttribute("head", "2");
 		model.addAttribute("dd", "update56");
@@ -827,21 +865,21 @@ public class WelcomeController {
 		return "welcomeMember";
 
 	}
-	
-	
+
 	@RequestMapping("/regitermember")
 	public String resiter(Model model) {
 		model.addAttribute("SE", "");
 
 		return "resiter2";
 	}
-	
+
 	@RequestMapping(value = "/register23", method = RequestMethod.POST)
 	public String register23(@ModelAttribute("SpringWeb") UserAllBean bean, String fristName, String lastName,
-			String username, String password, Model model,String stRoleId) {
+			String username, String password, Model model, String stRoleId) {
 		String oo = "";
 		try {
-			bean = userAllDao.login(username, fristName);
+			bean = usertableDao.emails(username);
+			// bean = userAllDao.login(username, fristName);
 			if (bean.getUsUsername() != null) {
 				model.addAttribute("SE", "M");
 				oo = "resiter";
@@ -860,19 +898,19 @@ public class WelcomeController {
 					try {
 						menberDao.sssssdd(bean);
 						model.addAttribute("SE", "S");
-						oo = "resiter";
+						oo = "resiter2";
 
 					} catch (Exception e) {
 						// TODO: handle exception
 						e.printStackTrace();
 						model.addAttribute("SE", "F");
-						oo = "resiter";
+						oo = "resiter2";
 					}
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
 					model.addAttribute("SE", "F");
-					oo = "resiter";
+					oo = "resiter2";
 				}
 			}
 
@@ -885,26 +923,102 @@ public class WelcomeController {
 		return oo;
 	}
 
+	@RequestMapping("/gan2")
+	public String gan2(Model model, String gan, int money) throws SQLException {
+		MoneyBean bean = new MoneyBean();
+		bean = usertableDao.gansel(gan);
+		if (bean.getMoIdcradmoney() != null) {
+			model.addAttribute("SE", "F");
+		} else {
+			bean.setMoIdcradmoney(gan);
+			bean.setMoMoney(money);
+			historyDao.recharge(bean);
+			model.addAttribute("SE", "L");
+		}
+
+		return "admin/adminsel10";
+	}
+
+	@RequestMapping("/Fill-Point")
+	public String FillPoint(Model model, HttpServletRequest res) throws SQLException {
+		AmountBean bb = new AmountBean();
+		try {
+			bb = userAllDao.FillPoint(email);
+			model.addAttribute("box", "");
+			model.addAttribute("msg", "11");
+			model.addAttribute("gg", "");
+			res.getSession().setAttribute("amo", bb);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return "welcome";
+	}
+
+	@RequestMapping("/gotomon")
+	public String gotomon(Model model, String vvvs, Long money, HttpServletRequest res) throws SQLException {
+		AmountBean bb = new AmountBean();
+		MoneyBean vos = new MoneyBean();
+		int slar;
+		try {
+			vos = userAllDao.gotomon(vvvs);
+
+			bb = userAllDao.FillPoint(email);
+
+			if (vos.getMoStaus().equals("2") || vos.getMoStaus() == null) {
+
+			} else if (vos.getMoStaus().equals("1")) {
+				slar = vos.getMoMoney() + bb.getAmMoney();
+				menberDao.gotomon2(email, slar);
+				menberDao.gotomon3(vvvs);
+				System.out.println(slar);
+
+			}
+			bb = userAllDao.FillPoint(email);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		res.getSession().setAttribute("amo", bb);
+
+		model.addAttribute("box", "");
+		model.addAttribute("msg", "11");
+		return "welcome";
+	}
 	
+	
+	@RequestMapping("/gotomsg123")
+	public String gotomsg123(Model model, HttpServletRequest res ,String email ,String msghard ,String msgbody) throws SQLException {
+		MsgadminBean bb = new MsgadminBean();
+		bb.setMsName(email);
+		bb.setMsDate(new Date());
+		bb.setMsMsgbody(msgbody);
+		bb.setMsMsghard(msghard);
+		try {
+			menberDao.dsdadsa(bb);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return "admin/adminsel12";
+	}
 	// end class
 }
 
-/*@RequestMapping(value = "/gotoUpdate", method = RequestMethod.POST)
-public String gotoUpdate(Model model, String regid, HttpServletRequest res) {
-	RegisterallBean bean = new RegisterallBean();
-	try {
-		bean = registerDao.sel(regid);
-		if (bean.getRegId() != 0) {
-
-		}
-
-updateuserlist
-
-	} catch (Exception e) {
-		// TODO: handle exception
-		e.printStackTrace();
-	}
-	res.getSession().setAttribute("resultBean", bean);
-	return "member/update";
-
-}*/
+/*
+ * @RequestMapping(value = "/gotoUpdate", method = RequestMethod.POST) public
+ * String gotoUpdate(Model model, String regid, HttpServletRequest res) {
+ * RegisterallBean bean = new RegisterallBean(); try { bean =
+ * registerDao.sel(regid); if (bean.getRegId() != 0) {
+ * 
+ * }
+ * 
+ * updateuserlist
+ * 
+ * } catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
+ * res.getSession().setAttribute("resultBean", bean); return "member/update";
+ * 
+ * }
+ */

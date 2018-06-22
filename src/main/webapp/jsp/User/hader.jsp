@@ -10,10 +10,16 @@
 	<a href="gotolistcar" onclick="w3_close()"
 		class="w3-bar-item w3-button w3-padding w3-text-teal"><i
 		class="	fa fa-automobile fa-fw w3-margin-right"></i>ดูรายการที่รอการอนุมัติ</a>
+		<a href="#" onclick="w3_close()"
+		class="w3-bar-item w3-button w3-padding w3-text-teal"><i
+		class="	fa fa-automobile fa-fw w3-margin-right"></i>ติดต่อแอดมิน</a>
 	<a href="gotolistcar2" onclick="w3_close()"
 		class="w3-bar-item w3-button w3-padding w3-text-teal"><i
-		class="	fa fa-automobile fa-fw w3-margin-right"></i>รายการผ่านอนุมัติ</a> <a
-		href="logout" onclick="w3_close()"
+		class="	fa fa-automobile fa-fw w3-margin-right"></i>รายการผ่านอนุมัติ</a>
+	<a href="Fill-Point" onclick="w3_close()"
+		class="w3-bar-item w3-button w3-padding w3-text-teal"><i
+		class="	fa fa-automobile fa-fw w3-margin-right"></i>เติมเงิน</a>
+	<a href="logout" onclick="w3_close()"
 		class="w3-bar-item w3-button w3-padding w3-text-teal"><i
 		class="	fa fa-automobile fa-fw w3-margin-right"></i>ออกจากระบบ</a>
 </div>

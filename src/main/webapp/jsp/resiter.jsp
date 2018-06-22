@@ -13,6 +13,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.js"></script>
+	
 <%
 	String result = "";
 %>
@@ -87,8 +89,10 @@ label {
 							type="text" class="form-control" name="lastName">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email :</label> <input
-							type="email" class="form-control" name="username" id="exampleInputEmail1">
+						
+						<label for="exampleInputEmail1">Email :</label>
+						<div id="aa"></div> <input
+							type="email" class="form-control" name="username" id="email">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Password :</label> <input
@@ -100,11 +104,15 @@ label {
 					</div>
 					
 					<div class="panel-footer" align="right">
-						<button style="width: 4cm;" type="submit" class="btn btn-outline-success">สมัคร</button>
+						<button style="width: 4cm;" type="submit" class="btn btn-outline-success" id="mm">สมัคร</button>
 						<button style="width: 4cm;" type="button" class="btn btn-outline-primary" 
-							onclick="javascript: document.backForm.submit()"> Back</button>
+							onclick="javascript: document.backForm.submit()" > Back</button>
 					</div>
+<div class="form-group">
 
+<input type="text" id="test" min="0" max="10" step="" value=""/>
+
+</div>
 				</form>
 			</div>
 			<div class="form-group col-md-2"></div>
@@ -116,6 +124,38 @@ label {
 		src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="assets/js/checknewuser.js"></script>
 	<script type="text/javascript">
+
+	$(document).ready(function(){
+		anElement = new AutoNumeric("#test");
+	});
+	
+	
+$('#email').change(function () {
+			
+			var criteriaBean = { "year" :  $('#email').val()};
+			$('#aa').empty();
+			
+			$.ajax({
+				type : "POST",
+				url : "/emails",
+				data: JSON.stringify(criteriaBean) ,
+				contentType : "application/json; charset=utf-8",
+				dataType : "json",
+				success : function(msg) {
+					console.log('Success')
+					if(msg.usUsername != null) {
+						$('#aa').append('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>ผิดพลาด ! </strong> Email มีแล้ว!!</div>');
+						$("#mm").attr('disabled','disabled');
+					}
+					else if(msg.usUsername == null) {
+						$('#aa').append('<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Email </strong> ใช้งานได้</div>');
+						$("#mm").attr('disabled',false);
+					}
+					
+				}
+			});
+		});
+
 	function fncSubmit()
 	{
 

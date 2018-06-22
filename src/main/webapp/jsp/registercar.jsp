@@ -189,8 +189,10 @@ span {
 						class="red-star">*</span>:
 					</label>
 					<div class="form-group col-sm-7">
-						<input type="text" name="email" maxlength="90" value="" id="email"
-							class="form-control">
+						<input type="text" name="" maxlength="90" value="<%=bean.getEmail() %>" id="email"
+							class="form-control" disabled="disabled">
+							<input type="hidden" name="email" maxlength="90" value="<%=bean.getEmail() %>" id="email"
+							class="form-control" >
 					</div>
 				</div>
 			</div>
@@ -306,7 +308,7 @@ span {
 					<label class="col-sm-5 control-label">&nbsp;</label>
 					<div class="col-sm-7">
 						<button type="submit" class="btn btn-success">ส่งข้อมูล</button>
-						<a type="button" class="btn btn-danger" onclick="black()">
+						<a type="button" class="btn btn-danger" onclick="black2()">
 							Back</a>
 					</div>
 				</div>
@@ -374,5 +376,14 @@ span {
     	  navigator.geolocation.getCurrentPosition(success, error);
     	 
     	});
+    
+    function black2() {
+	    var txt;
+	    if (confirm("คุณต้องการจะยกเลิกหรือไม่")) {
+	    	 window.location="/select"; 
+	    	
+	    } 
+	    document.getElementById("demo").innerHTML = txt;
+	}
     </script>
 </html>

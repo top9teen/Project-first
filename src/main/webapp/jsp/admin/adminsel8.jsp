@@ -35,7 +35,8 @@
 <link href="assets/admin/css/font-awesome.min.css" rel="stylesheet">
 <link href="assets/admin/css/datepicker3.css" rel="stylesheet">
 <link href="assets/admin/css/styles.css" rel="stylesheet">
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--Custom Font-->
 <link
 	href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -154,45 +155,7 @@
 				<input type="text" class="form-control" placeholder="Search">
 			</div>
 		</form>
-		<ul class="nav menu">
-			<li class="active"><a href="welcomeAdmin"><em
-					class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-			<li><a href="widgets"><em class="fa fa-calendar">&nbsp;</em>
-					Widgets</a></li>
-			<li><a href="charts"><em class="fa fa-bar-chart">&nbsp;</em>
-					Charts</a></li>
-			<li><a href="elements"><em class="fa fa-toggle-off">&nbsp;</em>
-					UI Elements</a></li>
-			<li><a href="panelsl"><em class="fa fa-clone">&nbsp;</em>
-					Alerts &amp; Panels</a></li>
-			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
-					<em class="fa fa-navicon">&nbsp;</em> Multilevel <span
-					data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em
-						class="fa fa-plus"></em></span>
-			</a>
-				<ul class="children collapse" id="sub-item-1">
-					<li><a class="" href="adminsel1"> <span
-							class="fa fa-arrow-right">&nbsp;</span> ดูสินเชื่อทั้งหมด
-					</a></li>
-					<li><a class="" href="adminsel2"> <span
-							class="fa fa-arrow-right">&nbsp;</span> ดูสินเชื่อที่ผ่านอนุมัต
-					</a></li>
-					<li><a class="" href="adminsel3"> <span
-							class="fa fa-arrow-right">&nbsp;</span> ดูรายละเอียดธนาคาร
-					</a></li>
-					<li><a class="" href="adminmsg"> <span
-							class="fa fa-arrow-right">&nbsp;</span> ข้อความจากสมาชิก
-					</a></li>
-					<li><a class="" href="adminupdate"> <span
-							class="fa fa-arrow-right">&nbsp;</span> อัพเดทราคารถยนต์
-					</a></li>
-					<li><a class="" href="admininsert"> <span
-							class="fa fa-arrow-right">&nbsp;</span> เพิ่มรถยนต์
-					</a></li>
-				</ul></li>
-			<li><a href="logoutadmin"><em class="fa fa-power-off">&nbsp;</em>
-					Logout</a></li>
-		</ul>
+		<%@include file="hradadmin.jsp"%>
 	</div>
 	<!--/.sidebar-->
 

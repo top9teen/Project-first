@@ -257,6 +257,22 @@ public class RegisterDao {
 		 			// TODO: handle exception
 		 		}
 	   }
+   public void deldeteddd(String regid) {
+	   
+	   ConnectDB con = new ConnectDB();
+	 		PreparedStatement prepared = null;
+	 		StringBuilder sql = new StringBuilder();
+	 	   
+	 		try {
+	 			sql.append("UPDATE msgadmin SET ms_staus = ?  WHERE ms_id = ? ");
+				prepared = con.openConnect().prepareStatement(sql.toString());
+				prepared.setString(1,"2");
+				prepared.setString(2, regid);
+	 			prepared.executeUpdate();
+	 		} catch (Exception e) {
+	 			// TODO: handle exception
+	 		}
+   }
 
    public void  update(String refid) {
 	   ConnectDB con = new ConnectDB();

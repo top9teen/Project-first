@@ -1,7 +1,7 @@
 <%@page import="com.bru.model.UserAllBean"%>
 <%@ page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
     <html xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
@@ -12,7 +12,8 @@
 	<link href="assets/admin/css/font-awesome.min.css" rel="stylesheet">
 	<link href="assets/admin/css/datepicker3.css" rel="stylesheet">
 	<link href="assets/admin/css/styles.css" rel="stylesheet">
-	
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 	<!--[if lt IE 9]>
@@ -110,29 +111,7 @@ bean = (UserAllBean) request.getSession().getAttribute("Login");
 				<input type="text" class="form-control" placeholder="Search">
 			</div>
 		</form>
-		<ul class="nav menu">
-		    <li class="active"><a href="welcomeAdmin"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-			<li><a href="widgets"><em class="fa fa-calendar">&nbsp;</em> Widgets</a></li>
-			<li><a href="charts"><em class="fa fa-bar-chart">&nbsp;</em> Charts</a></li>
-			<li><a href="elements"><em class="fa fa-toggle-off">&nbsp;</em> UI Elements</a></li>
-			<li><a href="panelsl"><em class="fa fa-clone">&nbsp;</em> Alerts &amp; Panels</a></li>
-			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
-				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
-				</a>
-				<ul class="children collapse" id="sub-item-1">
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 1
-					</a></li>
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 2
-					</a></li>
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 3
-					</a></li>
-				</ul>
-			</li>
-			<li><a href="logoutadmin"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
-		</ul>
+		<%@include file="hradadmin.jsp"%>
 	</div><!--/.sidebar-->
 		
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">

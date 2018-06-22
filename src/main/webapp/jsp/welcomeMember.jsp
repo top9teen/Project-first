@@ -230,7 +230,7 @@ result2 = (String) request.getAttribute("dd");
 							<label for="exampleInputPassword1">ข้อความ</label>
 							<textarea rows="5" class="form-control" cols="" name="msgbody"></textarea>
 						</div>
-						<input type="hidden" value=" <%=bean.getUsFname()%>" name="name">
+						<input type="hidden" value=" <%=bean.getUsUsername()%>" name="name">
 						<br>
 						<div class="panel-footer" align="right">
 							<input type="submit" class="btn btn-success" value="ส่งข่อความ">&nbsp;

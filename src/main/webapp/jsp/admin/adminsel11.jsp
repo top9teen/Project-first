@@ -2,13 +2,13 @@
 <%@ page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@page import="com.bru.model.*"%>
+<%@page import="com.bru.model.MsgadminBean"%>
 <%@page import="java.util.List"%>
 <%
-	List<RegisterallBean> list = null;
+	List<MsgadminBean> list = null;
 %>
 <%
-	list = (List<RegisterallBean>) request.getSession().getAttribute("listUser");
+	list = (List<MsgadminBean>) request.getSession().getAttribute("listUser");
 %>
 <html xmlns:th="http://www.thymeleaf.org">
 <html>
@@ -207,48 +207,52 @@
 				<div class="panel panel-default">
 
 					<div class="panel-body">
-						<H2 align="center">ดูสินเชื่อที่ผ่านอนุมัต</H2>
+						<h2 align="center">ข้อความจากสมาชิก</h2>
 						<form name="welcome" action="." method="post">
 							<input type="hidden" name="regid" id="regid">
 							<table class="table table-bordered">
+							<thead>
 								<tr>
 									<th class="text-center">ลำดับ</th>
-									<th class="text-center">ชื่อ</th>
-									<th class="text-center">ธนาคาร</th>
-									<th class="text-center">นามสกุล</th>
-									<th class="text-center">เบอร์โทร</th>
-									<th class="text-center">รถรุ่น</th>
-									<th class="text-center">จังหวัด</th>
-									<th class="text-center">เงินต้องการ</th>
+									<th class="text-center">ผู้ส่ง</th>
+									<th class="text-center">หัวข้อ</th>
+									<th class="text-center">เรื่อง</th>
 									<th class="text-center">วันที่</th>
-									<th class="text-center">รายละเอียด</th>
+									
 								</tr>
+								</thead>
+								<tbody id="myTable">
 								<%
 									for (int i = 0; i < list.size(); i++) {
 								%>
 								<tr class="text-center">
 
 									<td><%=i + 1%></td>
-									<td><%=list.get(i).getRegBankname()%></td>
-									<td><%=list.get(i).getRegFirstname()%></td>
-									<td><%=list.get(i).getRegLastname()%></td>
-									<td><%=list.get(i).getRegTelephone()%></td>
-									<td><%=list.get(i).getRegCarmake()%></td>
-									<td><%=list.get(i).getRegProvince()%></td>
-									<td><%=list.get(i).getRegLesslimit()%></td>
-									<td><%=list.get(i).getRegDate()%></td>
-									<td><a onclick="gotoUpdate('<%=list.get(i).getRegId()%>')"><span
-											class="glyphicon glyphicon-search"> </span></a></td>
-
-
+									<td><%=list.get(i).getMsName()%></td>
+									<td><%=list.get(i).getMsMsghard()%></td>
+									<td><%=list.get(i).getMsMsgbody()%></td>
+									<td><%=list.get(i).getMsDate()%></td>
+									
 								</tr>
 								<%
 									}
 								%>
+								</tbody>
 							</table>
 
 						</form>
-
+						<script type="text/javascript">
+						
+							
+							$(document).ready(function(){
+								  $("#myInput").on("keyup", function() {
+								    var value = $(this).val().toLowerCase();
+								    $("#myTable tr").filter(function() {
+								      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+								    });
+								  });
+								});
+						</script>
 					</div>
 				</div>
 			</div>
@@ -544,11 +548,6 @@
 				scaleFontColor : "#c5c7cc"
 			});
 		};
-		function gotoUpdate(filter) {
-			document.getElementById("regid").value = filter;
-			document.welcome.action = "gotoUpdateadmin2";
-			document.welcome.submit();
-		}
 	</script>
 
 </body>

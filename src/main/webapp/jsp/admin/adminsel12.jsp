@@ -2,7 +2,7 @@
 <%@ page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@page import="com.bru.model.*"%>
+<%@page import="com.bru.model.RegisterallBean"%>
 <%@page import="java.util.List"%>
 <%
 	List<RegisterallBean> list = null;
@@ -207,47 +207,39 @@
 				<div class="panel panel-default">
 
 					<div class="panel-body">
-						<H2 align="center">ดูสินเชื่อที่ผ่านอนุมัต</H2>
-						<form name="welcome" action="." method="post">
-							<input type="hidden" name="regid" id="regid">
-							<table class="table table-bordered">
-								<tr>
-									<th class="text-center">ลำดับ</th>
-									<th class="text-center">ชื่อ</th>
-									<th class="text-center">ธนาคาร</th>
-									<th class="text-center">นามสกุล</th>
-									<th class="text-center">เบอร์โทร</th>
-									<th class="text-center">รถรุ่น</th>
-									<th class="text-center">จังหวัด</th>
-									<th class="text-center">เงินต้องการ</th>
-									<th class="text-center">วันที่</th>
-									<th class="text-center">รายละเอียด</th>
-								</tr>
-								<%
-									for (int i = 0; i < list.size(); i++) {
-								%>
-								<tr class="text-center">
+						<h2 align="center">ส่งข้อความถึงลูกค้า</h2>
+						<div class="container">
 
-									<td><%=i + 1%></td>
-									<td><%=list.get(i).getRegBankname()%></td>
-									<td><%=list.get(i).getRegFirstname()%></td>
-									<td><%=list.get(i).getRegLastname()%></td>
-									<td><%=list.get(i).getRegTelephone()%></td>
-									<td><%=list.get(i).getRegCarmake()%></td>
-									<td><%=list.get(i).getRegProvince()%></td>
-									<td><%=list.get(i).getRegLesslimit()%></td>
-									<td><%=list.get(i).getRegDate()%></td>
-									<td><a onclick="gotoUpdate('<%=list.get(i).getRegId()%>')"><span
-											class="glyphicon glyphicon-search"> </span></a></td>
+							<form name="msg" action="gotomsg123" method="post">
+								<div class="panel panel-primary" style="margin-top: 15%">
+									<div class="panel-heading" align="center"></div>
+									<h2 align="center">ส่งถึง ลูกค้า</h2>
+									<br>
+									<div class="panel-body">
+										<div class="form-group">
+											<label for="exampleInputEmail1">Email User :</label> <input
+												type="text" class="form-control" name="email">
+										</div>
+										<div class="form-group">
+											<label for="exampleInputEmail1">ชื่อเรื่อง</label> <input
+												type="text" class="form-control" name="msghard">
+										</div>
 
+										<div class="form-group">
+											<label for="exampleInputPassword1">ข้อความ</label>
+											<textarea rows="5" class="form-control" cols=""
+												name="msgbody"></textarea>
+										</div>
+										<br>
+										<div class="panel-footer" align="right">
+											<input type="submit" class="btn btn-success"
+												value="ส่งข่อความ">&nbsp;
 
-								</tr>
-								<%
-									}
-								%>
-							</table>
-
-						</form>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
 
 					</div>
 				</div>
@@ -544,11 +536,6 @@
 				scaleFontColor : "#c5c7cc"
 			});
 		};
-		function gotoUpdate(filter) {
-			document.getElementById("regid").value = filter;
-			document.welcome.action = "gotoUpdateadmin2";
-			document.welcome.submit();
-		}
 	</script>
 
 </body>

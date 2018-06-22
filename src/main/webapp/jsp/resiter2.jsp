@@ -87,8 +87,8 @@ label {
 							type="text" class="form-control" name="lastName">
 					</div>
 					<div class="form-group">
-						<label for="exampleInputEmail1">Email :</label> <input
-							type="email" class="form-control" name="username" id="exampleInputEmail1">
+						<label for="exampleInputEmail1">Email :</label> <div id="aa"></div><input
+							type="email" class="form-control" name="username" id="email">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputEmail1">Password :</label> <input
@@ -122,6 +122,31 @@ label {
 		src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="assets/js/checknewuser.js"></script>
 	<script type="text/javascript">
+
+	$('#email').change(function () {
+			
+			var criteriaBean = { "year" :  $('#email').val()};
+			$('#aa').empty();
+			
+			$.ajax({
+				type : "POST",
+				url : "/emails",
+				data: JSON.stringify(criteriaBean) ,
+				contentType : "application/json; charset=utf-8",
+				dataType : "json",
+				success : function(msg) {
+					console.log('Success')
+					if(msg.usUsername != null) {
+						$('#aa').append('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>ผิดพลาด ! </strong> Email มีแล้ว!!</div>');
+					}
+					else if(msg.usUsername == null) {
+						$('#aa').append('<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Email </strong> ใช้งานได้</div>');
+						 
+					}
+					
+				}
+			});
+		});
 	function fncSubmit()
 	{
 

@@ -89,6 +89,7 @@
 		</div>
 
 	</form>
+	<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvz1uVgLhfYyVUj_c0pwRDwAZPelVTIpE&libraries=places&callback=initMap"          type="text/javascript"></script>
 	<script type="text/javascript">
 function black() {
 	var txt;

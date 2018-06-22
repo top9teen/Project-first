@@ -30,33 +30,33 @@
 						type="radio" name="bb" id="ka" value="kasikorn" checked>เลือก
 					<label for="exampleInputEmail1"> ธนาคคารกสิกร : <input
 						type="text" name="ka" disabled="disabled"
-						value="<%=kabean.getKaPrice()%>" class="form-control">
+						value="<%=kabean.getKaPrice()%>" class="form-control" id="test1">
 					</label>
 				</div>
 				<div class="form-group">
 					<input type="radio" name="bb" id="kr" value="krungsri">เลือก
 					<label for="exampleInputEmail1"> ธนาคารกรุงศรี : <input
 						type="text" name="kr" disabled="disabled"
-						value="<%=krbean.getKrPrice()%>" class="form-control">
+						value="<%=krbean.getKrPrice()%>" class="form-control" id="test2">
 					</label>
 				</div>
 				<div class="form-group">
 					<input type="radio" name="bb" id="sc" value="scbeasy">เลือก <label
 						for="exampleInputEmail1"> ธนาคาร SCB : <input type="text"
 						name="sc" disabled="disabled" value="<%=scbean.getScPrice()%>"
-						class="form-control">
+						class="form-control"id="test3">
 					</label>
 				</div>
 				<div class="form-group">
 					<input type="radio" name="bb" id="th" value="thanachart">เลือก
 					<label for="exampleInputEmail1"> ธนาคาร ธนชาติ : <input
 						type="text" name="th" disabled="disabled"
-						value="<%=thbean.getThPrice()%>" class="form-control">
+						value="<%=thbean.getThPrice()%>" class="form-control"id="test4">
 					</label>
 				</div>
 				<div class="form-group">
 					<label for="exampleInputEmail1"> เงินที่ต้องการ : <input
-						type="number" name="pp"  class="form-control">
+						type="text" name="pp"  class="form-control" id="pp">
 					</label>
 				</div>
 				<div class="panel-footer" align="center"
@@ -65,6 +65,16 @@
 
 				</div>
 			</form>
+			<script type="text/javascript">
+			$(document).ready(function(){
+				anElement = new AutoNumeric("#test1");
+				anElement = new AutoNumeric("#test2");
+				anElement = new AutoNumeric("#test3");
+				anElement = new AutoNumeric("#test4");
+			
+			});
+			
+			</script>
 		</div>
 		
 	

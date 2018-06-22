@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script
 	src="assets/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.js"></script>
 <link rel="stylesheet" href="assets/css/w3css.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Raleway">
@@ -35,6 +36,7 @@ body, h1, h2, h3, h4, h5, h6 {
 <%
 	String result = "";
 	String result2 = "";
+
 %>
 <%
 	bean = (UserAllBean) request.getSession().getAttribute("Login");
@@ -42,7 +44,10 @@ body, h1, h2, h3, h4, h5, h6 {
 <%
 	result = (String) request.getAttribute("msg");
 	result2 = (String) request.getAttribute("box");
+	
 %>
+
+
 
 <title>Welcome My <%=bean.getUsFname()%></title>
 </head>
@@ -162,6 +167,9 @@ body, h1, h2, h3, h4, h5, h6 {
 		<%} %>
 		<%if(result.equals("9")){ %>
 		<%@include file="User/seluser2.jsp"%>
+		<%} %>
+		<%if(result.equals("11")){ %>
+		<%@include file="User/FillPoint.jsp"%>
 		<%} %>
 		<div class="w3-row-padding w3-padding-16" id="about">
 			<div class="w3-col m6">

@@ -206,7 +206,8 @@
 		</div>
 		<div class="form-group row" id="display2" style="display: none;">
 		<div class="form-group col-md-3"></div>
-		<div class="form-group col-md-6">
+		<div class="form-group col-md-6" id="map" style="width:700px;height:900px;">
+		
 		
 		</div>
 		<div class="form-group col-md-3"></div>
@@ -253,6 +254,7 @@
 		</div>
 
 	</form>
+	<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvz1uVgLhfYyVUj_c0pwRDwAZPelVTIpE&libraries=places&callback=initMap"          type="text/javascript"></script>
 <script type="text/javascript">
 function black() {
 	var txt;

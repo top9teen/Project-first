@@ -16,9 +16,19 @@ public class SimBean {
 	
 	private String coname;
 	private Long coco;
+	private String Email;
+	
 	
 	
 
+
+	public String getEmail() {
+		return Email;
+	}
+
+	public void setEmail(String email) {
+		Email = email;
+	}
 
 	public String getLname() {
 		return lname;

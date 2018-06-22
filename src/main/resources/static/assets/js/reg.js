@@ -1,7 +1,7 @@
 	function black() {
 	    var txt;
 	    if (confirm("คุณต้องการจะยกเลิกหรือไม่")) {
-	    	 window.location="/"; 
+	    	 window.location="/select"; 
 	    	
 	    } 
 	    document.getElementById("demo").innerHTML = txt;
@@ -23,11 +23,7 @@
 			document.loanForm.idcard.focus();
 			return false;
 		}
-		if(document.loanForm.email.value ==""){
-			alert('Please input email');
-			document.loanForm.email.focus();
-			return false;
-		}
+		
 		if(document.loanForm.salary.value ==""){
 			alert('Please input salary');
 			document.loanForm.salary.focus();

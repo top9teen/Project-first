@@ -4,12 +4,7 @@
 	pageEncoding="utf-8"%>
 <%@page import="com.bru.model.*"%>
 <%@page import="java.util.List"%>
-<%
-	List<RegisterallBean> list = null;
-%>
-<%
-	list = (List<RegisterallBean>) request.getSession().getAttribute("listUser");
-%>
+
 <html xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
@@ -21,7 +16,7 @@
 <link href="assets/admin/css/datepicker3.css" rel="stylesheet">
 <link href="assets/admin/css/styles.css" rel="stylesheet">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	src="assets/jquery/jquery.min.js"></script>
 <!--Custom Font-->
 <link
 	href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -34,9 +29,11 @@
 <body>
 	<%
 		UserAllBean bean = null;
+	String rs = "";
 	%>
 	<%
 		bean = (UserAllBean) request.getSession().getAttribute("Login");
+	rs = (String) request.getAttribute("SE");
 	%>
 	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
@@ -203,54 +200,136 @@
 			<!--/.row-->
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-2">
+			</div>
+			<div class="col-md-8">
 				<div class="panel panel-default">
 
 					<div class="panel-body">
-						<H2 align="center">ดูสินเชื่อที่ผ่านอนุมัต</H2>
-						<form name="welcome" action="." method="post">
-							<input type="hidden" name="regid" id="regid">
-							<table class="table table-bordered">
-								<tr>
-									<th class="text-center">ลำดับ</th>
-									<th class="text-center">ชื่อ</th>
-									<th class="text-center">ธนาคาร</th>
-									<th class="text-center">นามสกุล</th>
-									<th class="text-center">เบอร์โทร</th>
-									<th class="text-center">รถรุ่น</th>
-									<th class="text-center">จังหวัด</th>
-									<th class="text-center">เงินต้องการ</th>
-									<th class="text-center">วันที่</th>
-									<th class="text-center">รายละเอียด</th>
-								</tr>
-								<%
-									for (int i = 0; i < list.size(); i++) {
-								%>
-								<tr class="text-center">
+						<h2 align="center">Generate Money</h2>
+						<%
+							if (rs.equals("L")) {
+						%>
+						<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>Success </strong> บันทึกเรียบร้อย
+						</div>
+						<%
+							} else if (rs.equals("F")) {
+						%>
+						<div class="alert alert-danger">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<strong>ผิดพลาด ! </strong> เลขบัตรนี้มีอยู่แล้ว
+						</div>
+						<%
+							}
+						%>
+						<div class="form-group" id="aa">
 
-									<td><%=i + 1%></td>
-									<td><%=list.get(i).getRegBankname()%></td>
-									<td><%=list.get(i).getRegFirstname()%></td>
-									<td><%=list.get(i).getRegLastname()%></td>
-									<td><%=list.get(i).getRegTelephone()%></td>
-									<td><%=list.get(i).getRegCarmake()%></td>
-									<td><%=list.get(i).getRegProvince()%></td>
-									<td><%=list.get(i).getRegLesslimit()%></td>
-									<td><%=list.get(i).getRegDate()%></td>
-									<td><a onclick="gotoUpdate('<%=list.get(i).getRegId()%>')"><span
-											class="glyphicon glyphicon-search"> </span></a></td>
-
-
-								</tr>
-								<%
-									}
-								%>
-							</table>
+						</div>
+						<form name="welcome" action="gan2" method="post" OnSubmit="return fncSubmit();">
+							
+							<div class="form-group">
+								<label for="exampleInputEmail1"></label>
+								 <input type="text"
+									class="form-control" placeholder="Generate" name="gan" maxlength="14" id="gan">
+							<br>
+									<input type="button" class="btn btn-danger" value="Generate" onClick="generate();" tabindex="2">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1"></label> <input
+									type="number" class="form-control" placeholder="money"
+									name="money">
+							</div>
+							<div class="panel-footer" align="center">
+							<input type="submit" class="btn btn-danger" value="ยืนยัน"  tabindex="2" tabindex="2" >
+							
+							</div>
+							
 
 						</form>
-
+	<script type="text/javascript">
+	function randomPassword(length) {
+	    var chars = "1234567890";
+	    var pass = "";
+	
+	    for (var x = 1; x <=14; x++) {
+	        var i = Math.floor(Math.random() * chars.length);
+	        pass += chars.charAt(i);
+	        
+	    }
+	    
+	  	  return pass;
+	}
+	
+	function fncSubmit() {
+		if (document.welcome.gan.value == "" ) {
+			alert('Please input new Generate');
+			document.welcome.gan.focus();
+			return false;
+		}
+		if (document.welcome.money.value <=1) {
+			alert('Please input Money');
+			document.welcome.money.focus();
+			return false;
+		}
+	}
+	function generate() {
+		
+		welcome.gan.value = randomPassword(welcome.length.value);
+		
+		$('#gan').ready(function () {
+			
+			var criteriaBean = { "year" :  $('#gan').val()};
+			$('#aa').empty();
+			
+			$.ajax({
+				type : "POST",
+				url : "/gansel",
+				data: JSON.stringify(criteriaBean) ,
+				contentType : "application/json; charset=utf-8",
+				dataType : "json",
+				success : function(msg) {
+					console.log('Success')
+					if(msg.moIdcradmoney != null) {
+						$('#aa').append('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>ผิดพลาด ! </strong> เลขนี้ใช้ไปแล้ว !!</div>');
+					}
+					else if(msg.moIdcradmoney == null) {
+						$('#aa').append('<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>เลขนี้สามารถใช้ได้ </strong> สามารถใช้ได้</div>');
+						/*  $('#bbb').val(' value="gffggf"');  */
+					}
+					
+				}
+			});
+		});
+	}
+	$('#gan').change(function () {
+		
+		var criteriaBean = { "year" :  $('#gan').val()};
+		$('#aa').empty();
+		
+		$.ajax({
+			type : "POST",
+			url : "/gansel",
+			data: JSON.stringify(criteriaBean) ,
+			contentType : "application/json; charset=utf-8",
+			dataType : "json",
+			success : function(msg) {
+				console.log('Success')
+				if(msg.moIdcradmoney != null) {
+					$('#aa').append('<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>ผิดพลาด ! </strong> เลขนี้ใช้ไปแล้ว !!</div>');
+				}
+				else if(msg.moIdcradmoney == null) {
+					$('#aa').append('<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>เลขนี้สามารถใช้ได้ </strong> สามารถใช้ได้</div>');
+				}
+				
+			}
+		});
+	});	</script>
 					</div>
 				</div>
+			</div>
+			<div class="col-md-2">
 			</div>
 		</div>
 		<!--/.row-->
@@ -534,7 +613,7 @@
 	<script src="assets/admin/js/easypiechart-data.js"></script>
 	<script src="assets/admin/js/bootstrap-datepicker.js"></script>
 	<script src="assets/admin/js/custom.js"></script>
-	<script>
+<!-- 	<script>
 		window.onload = function() {
 			var chart1 = document.getElementById("line-chart").getContext("2d");
 			window.myLine = new Chart(chart1).Line(lineChartData, {
@@ -544,12 +623,8 @@
 				scaleFontColor : "#c5c7cc"
 			});
 		};
-		function gotoUpdate(filter) {
-			document.getElementById("regid").value = filter;
-			document.welcome.action = "gotoUpdateadmin2";
-			document.welcome.submit();
-		}
+		
 	</script>
-
+ -->
 </body>
 </html>

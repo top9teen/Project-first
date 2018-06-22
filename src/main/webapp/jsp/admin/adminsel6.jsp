@@ -20,7 +20,8 @@
 <link href="assets/admin/css/font-awesome.min.css" rel="stylesheet">
 <link href="assets/admin/css/datepicker3.css" rel="stylesheet">
 <link href="assets/admin/css/styles.css" rel="stylesheet">
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--Custom Font-->
 <link
 	href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i"
@@ -139,45 +140,7 @@
 				<input type="text" class="form-control" placeholder="Search">
 			</div>
 		</form>
-		<ul class="nav menu">
-			<li class="active"><a href="welcomeAdmin"><em
-					class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-			<li><a href="widgets"><em class="fa fa-calendar">&nbsp;</em>
-					Widgets</a></li>
-			<li><a href="charts"><em class="fa fa-bar-chart">&nbsp;</em>
-					Charts</a></li>
-			<li><a href="elements"><em class="fa fa-toggle-off">&nbsp;</em>
-					UI Elements</a></li>
-			<li><a href="panelsl"><em class="fa fa-clone">&nbsp;</em>
-					Alerts &amp; Panels</a></li>
-			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
-					<em class="fa fa-navicon">&nbsp;</em> Multilevel <span
-					data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em
-						class="fa fa-plus"></em></span>
-			</a>
-				<ul class="children collapse" id="sub-item-1">
-					<li><a class="" href="adminsel1"> <span
-							class="fa fa-arrow-right">&nbsp;</span> ดูสินเชื่อทั้งหมด
-					</a></li>
-					<li><a class="" href="adminsel2"> <span
-							class="fa fa-arrow-right">&nbsp;</span> ดูสินเชื่อที่ผ่านอนุมัต
-					</a></li>
-					<li><a class="" href="adminsel3"> <span
-							class="fa fa-arrow-right">&nbsp;</span> ดูรายละเอียดธนาคาร
-					</a></li>
-					<li><a class="" href="adminmsg"> <span
-							class="fa fa-arrow-right">&nbsp;</span> ข้อความจากสมาชิก
-					</a></li>
-					<li><a class="" href="adminupdate"> <span
-							class="fa fa-arrow-right">&nbsp;</span> อัพเดทราคารถยนต์
-					</a></li>
-					<li><a class="" href="admininsert"> <span
-							class="fa fa-arrow-right">&nbsp;</span> เพิ่มรถยนต์
-					</a></li>
-				</ul></li>
-			<li><a href="logoutadmin"><em class="fa fa-power-off">&nbsp;</em>
-					Logout</a></li>
-		</ul>
+		<%@include file="hradadmin.jsp"%>
 	</div>
 	<!--/.sidebar-->
 
@@ -248,15 +211,17 @@
 						<form name="welcome" action="." method="post">
 							<input type="hidden" name="regid" id="regid">
 							<table class="table table-bordered">
+							<thead>
 								<tr>
 									<th class="text-center">ลำดับ</th>
-									<th class="text-center">ธนาคาร</th>
+									<th class="text-center">ผู้ส่ง</th>
 									<th class="text-center">หัวข้อ</th>
 									<th class="text-center">เรื่อง</th>
-
 									<th class="text-center">วันที่</th>
-
+									<th class="text-center">ลบข้อความ</th>
 								</tr>
+								</thead>
+								<tbody id="myTable">
 								<%
 									for (int i = 0; i < list.size(); i++) {
 								%>
@@ -267,19 +232,31 @@
 									<td><%=list.get(i).getMsMsghard()%></td>
 									<td><%=list.get(i).getMsMsgbody()%></td>
 									<td><%=list.get(i).getMsDate()%></td>
+									<td><a onclick="gotoUpdate('<%=list.get(i).getMsId()%>')"><span
+											class="glyphicon glyphicon-minus-sign"> </span></a></td>
 								</tr>
 								<%
 									}
 								%>
+								</tbody>
 							</table>
 
 						</form>
 						<script type="text/javascript">
+						
 							function gotoUpdate(filter) {
 								document.getElementById("regid").value = filter;
-								document.welcome.action = "gotoUpdateadmin";
+								document.welcome.action="gotodeledww";
 								document.welcome.submit();
 							}
+							$(document).ready(function(){
+								  $("#myInput").on("keyup", function() {
+								    var value = $(this).val().toLowerCase();
+								    $("#myTable tr").filter(function() {
+								      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+								    });
+								  });
+								});
 						</script>
 					</div>
 				</div>
@@ -567,15 +544,15 @@
 	<script src="assets/admin/js/bootstrap-datepicker.js"></script>
 	<script src="assets/admin/js/custom.js"></script>
 	<script>
-		window.onload = function () {
-	var chart1 = document.getElementById("line-chart").getContext("2d");
-	window.myLine = new Chart(chart1).Line(lineChartData, {
-	responsive: true,
-	scaleLineColor: "rgba(0,0,0,.2)",
-	scaleGridLineColor: "rgba(0,0,0,.05)",
-	scaleFontColor: "#c5c7cc"
-	});
-};
+		window.onload = function() {
+			var chart1 = document.getElementById("line-chart").getContext("2d");
+			window.myLine = new Chart(chart1).Line(lineChartData, {
+				responsive : true,
+				scaleLineColor : "rgba(0,0,0,.2)",
+				scaleGridLineColor : "rgba(0,0,0,.05)",
+				scaleFontColor : "#c5c7cc"
+			});
+		};
 	</script>
 
 </body>

@@ -24,7 +24,7 @@ import com.bru.model.KasikornPriceBean;
 import com.bru.model.KrungsriPriceBean;
 import com.bru.model.MsgadminBean;
 import com.bru.model.RegisterallBean;
-import com.bru.model.RegnameBean;
+
 import com.bru.model.ScbeasyPriceBean;
 import com.bru.model.SimBean;
 
@@ -66,7 +66,7 @@ public class AdminController {
 	@RequestMapping("/panelsl")
 	public String panelsl() {
 
-		return "admin/panelsl";
+		return "admin/panels";
 	}
 
 	@RequestMapping("/welcomeAdmin")
@@ -105,7 +105,7 @@ public class AdminController {
 	}
 	@RequestMapping("/adminsel2")
 	public String gotofist(Model model,HttpServletRequest requst) throws SQLException{
-		 List<RegnameBean> list = new ArrayList<>();
+		 List<RegisterallBean> list = new ArrayList<>();
 		 
 		 list = menberDao.listuser3();
 		
@@ -116,9 +116,9 @@ public class AdminController {
 	}
 	@RequestMapping( value = "/gotoUpdateadmin2" , method = RequestMethod.POST)
 	public String gotoUpdate2(Model model,String regid,HttpServletRequest res) {	
-		RegnameBean bean = new RegnameBean();
+		RegisterallBean bean = new RegisterallBean();
 		try {
-			bean = registerDao.sel2(regid);
+			bean = registerDao.sel(regid);
 			if(bean.getRegId() != 0) {
 				
 			}
@@ -147,6 +147,14 @@ public class AdminController {
 		list=menberDao.listmsg();
 		res.getSession().setAttribute("listUser", list);
 		return "admin/adminsel6";
+	}
+	
+	@RequestMapping("/adminmsg23")
+	public String adminmsg23(HttpServletRequest res)throws SQLException {
+		List<MsgadminBean> list = new ArrayList<>();
+		list=menberDao.listmsgdsad();
+		res.getSession().setAttribute("listUser", list);
+		return "admin/adminsel11";
 	}
 	
 	@RequestMapping("/adminupdate")
@@ -265,5 +273,40 @@ public class AdminController {
 		return "admin/adminsel9";
 		
 	}
+	@RequestMapping("/generate")
+	public String generate(Model model) {
+		model.addAttribute("SE", "");
+		return "admin/adminsel10";
+	}
+	
+	@RequestMapping("/gotodeledww")
+	public String gotodeledww(Model model,String regid,HttpServletRequest res) throws SQLException {
+		try {
+			System.out.println(regid);
+			 registerDao.deldeteddd(regid);
+				List<MsgadminBean> list = new ArrayList<>();
+				list=menberDao.listmsg();
+				res.getSession().setAttribute("listUser", list);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "admin/adminsel6";
+	}
+	@RequestMapping("/msguser")
+	public String msguser(Model model,String regid,HttpServletRequest res) throws SQLException {
+		try {
+			System.out.println(regid);
+			 registerDao.deldeteddd(regid);
+				List<MsgadminBean> list = new ArrayList<>();
+				list=menberDao.listmsg();
+				res.getSession().setAttribute("listUser", list);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "admin/adminsel12";
+	}
+
 	// end class
 }

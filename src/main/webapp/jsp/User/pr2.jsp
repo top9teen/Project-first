@@ -23,7 +23,8 @@ bean3 = (SimBean) request.getSession().getAttribute("simbean");
 					<input type="hidden" value="<%=bean3.getMybrand()%>"
 						name="Mybrand"> <input type="hidden"
 						value="<%=bean3.getMyYear()%>" name="MyYear">
-						<h2>เงินที่คุณต้องการคือ : <%=bean3.getPring1() %> บาท</h2>
+						<h2>เงินที่คุณต้องการคือ :<input type="text" value="<%=bean3.getPring1() %>" id="test1" disabled="disabled">  บาท</h2>
+						
 		<div class="col-md-12">
 			<div class="col-md-12">
 			
@@ -94,4 +95,11 @@ function gotohome() {
     }
     document.getElementById("demo").innerHTML = txt;
 }
+
+$(document).ready(function(){
+	anElement = new AutoNumeric("#test1");
+
+});
+
 </script>
+

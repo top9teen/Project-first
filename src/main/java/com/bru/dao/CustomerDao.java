@@ -206,19 +206,27 @@ public class CustomerDao {
 		Connection conn = con.openConnect();
 
 		try {
-			sql.append(" SELECT * FROM userall WHERE us_role ='2' ");
+			sql.append(" SELECT * FROM userall ");
 			prepared = conn.prepareStatement(sql.toString());
 			ResultSet rs = prepared.executeQuery();
 
 			while (rs.next()) {
 				UserAllBean bean = new UserAllBean();
-				bean.setUsUsername(rs.getString("us_username"));
-				bean.setUsPassword(rs.getString("us_password"));
-				bean.setUsFname(rs.getString("us_fname"));
-				bean.setUsLname(rs.getString("us_lname"));
-				bean.setUsAddress(rs.getString("us_address"));
-				bean.setUsCreatedate(rs.getDate("us_createdate"));
-				list.add(bean);
+				bean.setUsRole(rs.getString("us_role"));
+				if(bean.getUsRole().equals("5") || bean.getUsRole().equals("1")) {
+					
+					
+				}
+				else {
+					bean.setUsUsername(rs.getString("us_username"));
+					bean.setUsPassword(rs.getString("us_password"));
+					bean.setUsFname(rs.getString("us_fname"));
+					bean.setUsLname(rs.getString("us_lname"));
+					bean.setUsAddress(rs.getString("us_address"));
+					bean.setUsCreatedate(rs.getDate("us_createdate"));
+					list.add(bean);
+				}
+				
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
