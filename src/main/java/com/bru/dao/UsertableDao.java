@@ -167,6 +167,7 @@ public class UsertableDao {
 					bean.setRegLat(rs.getString("reg_lat"));
 					bean.setRegLog(rs.getString("reg_log"));
 					bean.setRegLessdayformy(rs.getString("reg_lessdaytomy"));
+					bean.setRegPeriod(rs.getInt("reg_period"));
 					list.add(bean);
 					
 				}

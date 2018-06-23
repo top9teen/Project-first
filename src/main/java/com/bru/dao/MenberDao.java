@@ -402,6 +402,32 @@ public class MenberDao {
 
 	}
 
+	
+	public void sssssss(MsgadminBean bean) throws SQLException{
+		ConnectDB con = new ConnectDB();
+		PreparedStatement prepared = null;
+		StringBuilder sql = new StringBuilder();
+		Connection conn = con.openConnect();
+		try {
+			sql.append("INSERT INTO msgadmin(ms_name,ms_msghard,ms_msgbody,ms_date,ms_email,ms_staus) VALUES(?,?,?,?,?,?)");
+			prepared = conn.prepareStatement(sql.toString());
+			prepared.setString(1, bean.getMsName());
+			prepared.setString(2, bean.getMsMsghard());
+			prepared.setString(3, bean.getMsMsgbody());
+			prepared.setDate(4, new Date(bean.getMsDate().getTime()));
+			prepared.setString(5, bean.getMsEmail());
+			prepared.setString(6, "1");
+			
+			prepared.executeUpdate();
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		finally {
+			conn.close();
+		}
+
+	}
 	public void dsdadsa(MsgadminBean bean) throws SQLException{
 		ConnectDB con = new ConnectDB();
 		PreparedStatement prepared = null;
@@ -438,7 +464,7 @@ public class MenberDao {
 
 		try {
 
-			sql.append(" SELECT * FROM  msgadmin WHERE ms_staus = ? ");
+			sql.append(" SELECT * FROM  msgadmin WHERE ms_staus = ?  ");
 			prepared = conn.prepareStatement(sql.toString());
 			prepared.setString(1, "1");
 			ResultSet rs = prepared.executeQuery();
@@ -450,6 +476,45 @@ public class MenberDao {
 				bean.setMsMsghard(rs.getString("ms_msghard"));
 				bean.setMsName(rs.getString("ms_name"));
 				bean.setMsDate(rs.getDate("ms_date"));
+				
+				list.add(bean);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			conn.close();
+		}
+		return list;
+	}
+	
+	public List<MsgadminBean> listmsgww( String email) throws SQLException{
+		ConnectDB con = new ConnectDB();
+		PreparedStatement prepared = null;
+		StringBuilder sql = new StringBuilder();
+		List<MsgadminBean> list = new ArrayList<>();
+		MsgadminBean bean = new MsgadminBean();
+		Connection conn = con.openConnect();
+
+		try {
+
+			sql.append(" SELECT * FROM  msgadmin WHERE ms_staus = ? AND ms_email = ?  ");
+			prepared = conn.prepareStatement(sql.toString());
+			prepared.setString(1, "1");
+			prepared.setString(2, email);
+			ResultSet rs = prepared.executeQuery();
+
+			while (rs.next()) {
+				bean = new MsgadminBean();
+				bean.setMsId(rs.getInt("ms_id"));
+				bean.setMsMsgbody(rs.getString("ms_msgbody"));
+				bean.setMsMsghard(rs.getString("ms_msghard"));
+				bean.setMsName(rs.getString("ms_name"));
+				bean.setMsDate(rs.getDate("ms_date"));
+				bean.setMsEmail(rs.getString("ms_email"));
+				
 				
 				list.add(bean);
 			}

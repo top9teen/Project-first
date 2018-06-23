@@ -9,7 +9,23 @@ public class MsgadminBean {
 	private String msMsghard;
 	private String msMsgbody;
 	private Date msDate;
+	private String msEmail;
+	private String msStaus;
 	
+	
+	
+	public String getMsEmail() {
+		return msEmail;
+	}
+	public void setMsEmail(String msEmail) {
+		this.msEmail = msEmail;
+	}
+	public String getMsStaus() {
+		return msStaus;
+	}
+	public void setMsStaus(String msStaus) {
+		this.msStaus = msStaus;
+	}
 	public Date getMsDate() {
 		return msDate;
 	}

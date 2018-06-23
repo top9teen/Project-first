@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bru.dao.CarallDao;
 import com.bru.dao.CustomerDao;
+import com.bru.dao.HistoryDao;
 import com.bru.dao.MenberDao;
 import com.bru.dao.RegisterDao;
 import com.bru.dao.UserAllDao;
@@ -23,12 +24,14 @@ import com.bru.model.CarBean;
 import com.bru.model.KasikornPriceBean;
 import com.bru.model.KrungsriPriceBean;
 import com.bru.model.MsgadminBean;
+import com.bru.model.PorepaidhistoryBean;
 import com.bru.model.RegisterallBean;
 
 import com.bru.model.ScbeasyPriceBean;
 import com.bru.model.SimBean;
 
 import com.bru.model.ThanachartPriceBean;
+import com.bru.model.TransfermoneyBean;
 import com.bru.model.UpdatecarBean;
 import com.bru.model.UserAllBean;
 import com.bru.model.YearBean;
@@ -45,6 +48,10 @@ public class AdminController {
 	RegisterDao registerDao;
 	@Autowired
 	CarallDao carallDao;
+	@Autowired
+	HistoryDao historyDao;
+	
+	
 	@RequestMapping("/widgets")
 	public String widgets() {
 
@@ -309,4 +316,22 @@ public class AdminController {
 	}
 
 	// end class
+	
+	@RequestMapping("/msgall23")
+	public String msgall23(Model model,String regid,HttpServletRequest res) throws SQLException {
+		try {
+			List<TransfermoneyBean> list1 = new ArrayList<>();
+			List<PorepaidhistoryBean> list2 = new ArrayList<>();
+			list1 = historyDao.findAll2();
+			list2 = historyDao.findAll1();
+			
+				res.getSession().setAttribute("list1", list1);
+				res.getSession().setAttribute("list2", list2);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "admin/adminsel13";
+	}
+
 }

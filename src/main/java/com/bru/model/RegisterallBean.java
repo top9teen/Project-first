@@ -1,5 +1,6 @@
 package com.bru.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class RegisterallBean {
@@ -33,10 +34,21 @@ public class RegisterallBean {
 	private String regLog;
 	private String regLessdayformy;
 	private String regReadtext;
+	private int  regPeriod;
+	
+	
 	
 	
 
 
+
+
+	public int getRegPeriod() {
+		return regPeriod;
+	}
+	public void setRegPeriod(int regPeriod) {
+		this.regPeriod = regPeriod;
+	}
 	public String getRegReadtext() {
 		return regReadtext;
 	}

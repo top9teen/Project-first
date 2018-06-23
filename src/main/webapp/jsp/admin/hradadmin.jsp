@@ -35,6 +35,9 @@
 					<li><a class="" href="adminmsg23"> <span
 							class="fa fa-arrow-right">&nbsp;</span> ประวัติข้อความที่ลบไป
 					</a></li>
+					<li><a class="" href="msgall23"> <span
+							class="fa fa-arrow-right">&nbsp;</span> ประวัติการเติมเงิน/โอนเงิน
+					</a></li>
 						<li><a class="" href="msguser"> <span
 							class="fa fa-arrow-right">&nbsp;</span> ส่งข้อความ
 					</a></li>

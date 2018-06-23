@@ -25,7 +25,7 @@ public class RegisterDao {
 
 		try {
 			sql.append(
-					" INSERT INTO  registerall(reg_bankname,reg_firstname,reg_lastname,reg_age,reg_province,reg_telephone,reg_idcard,reg_email,reg_carmodel,reg_carmake,reg_totalincome,reg_salary,reg_lesslimit,reg_lessday,reg_imgfront,reg_imgback,reg_imgleft,reg_imgright,reg_date,reg_amphur,reg_district,reg_roleuser,reg_moban,reg_statusmember,reg_lat,reg_log,reg_lessdaytomy,reg_readtext) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
+					" INSERT INTO  registerall(reg_bankname,reg_firstname,reg_lastname,reg_age,reg_province,reg_telephone,reg_idcard,reg_email,reg_carmodel,reg_carmake,reg_totalincome,reg_salary,reg_lesslimit,reg_lessday,reg_imgfront,reg_imgback,reg_imgleft,reg_imgright,reg_date,reg_amphur,reg_district,reg_roleuser,reg_moban,reg_statusmember,reg_lat,reg_log,reg_lessdaytomy,reg_readtext,reg_period) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
 			prepared = conn.prepareStatement(sql.toString());
 			prepared.setString(1, bean.getRegBankname());
 			prepared.setString(2, bean.getRegFirstname());
@@ -55,6 +55,7 @@ public class RegisterDao {
 			prepared.setString(26, bean.getRegLog());
 			prepared.setString(27, bean.getRegLessday());
 			prepared.setString(28, "1");
+			prepared.setInt(29, bean.getRegPeriod());
 
 			prepared.executeUpdate();
 			
@@ -179,6 +180,7 @@ public class RegisterDao {
 				bean.setRegLat(rs.getString("reg_lat"));
 				bean.setRegLog(rs.getString("reg_log"));
 				bean.setRegLessdayformy(rs.getString("reg_lessdaytomy"));
+				bean.setRegPeriod(rs.getInt("reg_period"));
 			}
 
 		} catch (Exception e) {
@@ -292,16 +294,33 @@ public class RegisterDao {
 		}
    }
    
-   public void  updateddsd(String refid,String updatepried) {
+   public void  updateddsd(String updatepried ,String refid) throws SQLException {
 	   ConnectDB con = new ConnectDB();
 		PreparedStatement prepared = null;
 		StringBuilder sql = new StringBuilder();
 	   
 		try {
-			sql.append("UPDATE registerall SET reg_lessday = ?  WHERE reg_id = ? ");
+			sql.append("UPDATE registerall SET reg_lessdaytomy = ?  WHERE reg_id = ? ");
 			prepared = con.openConnect().prepareStatement(sql.toString());
 			prepared.setString(1,updatepried);
 			prepared.setString(2, refid);
+		
+			prepared.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+   }
+   
+   public void  updateddsssd(String refid) throws SQLException {
+	   ConnectDB con = new ConnectDB();
+		PreparedStatement prepared = null;
+		StringBuilder sql = new StringBuilder();
+	   
+		try {
+			sql.append("DELETE FROM  registerall  WHERE reg_id = ? ");
+			prepared = con.openConnect().prepareStatement(sql.toString());
+			prepared.setString(1,refid);
+			
 		
 			prepared.executeUpdate();
 		} catch (Exception e) {

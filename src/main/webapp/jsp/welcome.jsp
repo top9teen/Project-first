@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<script
-	src="assets/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.js"></script>
+<script src="assets/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.1.0/autoNumeric.js"></script>
 <link rel="stylesheet" href="assets/css/w3css.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Raleway">
@@ -18,8 +18,9 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-	
+<script
+	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
 <style>
 body, h1, h2, h3, h4, h5, h6 {
 	font-family: "Raleway", sans-serif;
@@ -65,11 +66,10 @@ body, h1, h2, h3, h4, h5, h6 {
 		<h4>
 			<b> Welcome My <%=bean.getUsFname()%></b>
 		</h4>
-	
+
 		<p class="w3-text-grey"><%=bean.getUsFname()%></p>
 	</div>
-		<%@include file="User/hader.jsp"%>
-	</nav>
+	<%@include file="User/hader.jsp"%> </nav>
 
 	<!-- Overlay effect when opening sidebar on small screens -->
 	<div class="w3-overlay w3-hide-large w3-animate-opacity"
@@ -86,24 +86,24 @@ body, h1, h2, h3, h4, h5, h6 {
 		<span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey"
 			onclick="w3_open()"><i class="fa fa-bars"></i></span>
 		<div class="w3-container">
-			
+
 			<h1 align="center">
 				<b>Welcome My Car Loan Analysis System</b>
 			</h1>
 
 		</div>
 		</header>
-		
-		
+
+
 		<%
 		 if(result2.equals("car")) {
 		%>
-		<%@include file="User/car2.jsp" %>
+		<%@include file="User/car2.jsp"%>
 		<%} %>
 		<%
 			if (result.equals("0")) {
 		%>
-		
+
 		<%@include file="Bank/dag.jsp"%>
 		<%
 			} else if (result2.equals("select")) {
@@ -151,15 +151,38 @@ body, h1, h2, h3, h4, h5, h6 {
 		%>
 		<%if(result.equals("5")){ %>
 		<%@include file="User/banksalary.jsp"%>
-		
+
 		<%} %>
-	<%if(result.equals("6")){ %>
+		<%if(result.equals("6")){ %>
 		<%@include file="User/pr2.jsp"%>
 		<%} %>
 		<%if(result.equals("7")){ %>
 		<%@include file="User/tabeltip.jsp"%>
 		<%} %>
-			<%if(result.equals("10")){ %>
+
+		<%
+							if (result2.equals("F2")) {
+						%>
+		<div class="alert alert-danger">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>ผิดพลาด </strong> เงินของท่านไม่พอ
+		</div>
+
+		<%
+							} else if (result2.equals("L2")) {
+						%>
+						<div class="alert alert-success">
+		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		
+			<strong>สำเร็จ </strong> เรียนร้อย
+		</div>
+		<%
+							} 
+			%>
+
+
+
+		<%if(result.equals("10")){ %>
 		<%@include file="User/tabeltip2.jsp"%>
 		<%} %>
 		<%if(result.equals("8")){ %>
@@ -170,6 +193,9 @@ body, h1, h2, h3, h4, h5, h6 {
 		<%} %>
 		<%if(result.equals("11")){ %>
 		<%@include file="User/FillPoint.jsp"%>
+		<%} %>
+		<%if(result.equals("123")){ %>
+		<%@include file="User/msgToadmin.jsp"%>
 		<%} %>
 		<div class="w3-row-padding w3-padding-16" id="about">
 			<div class="w3-col m6">
@@ -192,7 +218,7 @@ body, h1, h2, h3, h4, h5, h6 {
 
 	<script type="text/javascript" src="assets/js/checknewuser.js"></script>
 	<script type="text/javascript" src="assets/js/selcarall.js"></script>
-	
+
 
 </body>
 </html>

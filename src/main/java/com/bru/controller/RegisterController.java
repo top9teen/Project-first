@@ -1,5 +1,7 @@
 package com.bru.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -46,9 +48,47 @@ public class RegisterController {
 		amp=ckDao.amphur(i2);
 		pro=ckDao.province(i1);
 		dis=ckDao.dis(i3);
+		Double  sararyww  ;
+		Integer  aa = Integer.parseInt(lassday);
+		Integer  bb = Integer.parseInt(lessLimit);
 	
+		if(lassday.equals("12")) {
+			sararyww = ((((0.55 * aa) * bb) / 100) + bb) / aa;
+			BigDecimal sarary2 = new BigDecimal(sararyww);
+			sarary2.setScale(0, RoundingMode.HALF_UP);
+			Integer job = sarary2.intValue();
+			bean.setRegPeriod(job);
+		}
+		else if (lassday.equals("24")) {
+			sararyww = ((((0.55 * aa) * bb) / 100) + bb) / aa;
+			BigDecimal sarary2 = new BigDecimal(sararyww);
+			sarary2.setScale(0, RoundingMode.HALF_UP);
+			Integer job = sarary2.intValue();
+			bean.setRegPeriod(job);
+		}else if (lassday.equals("36")) {
+			sararyww = ((((0.55 * aa) * bb) / 100) + bb) / aa;
+			BigDecimal sarary2 = new BigDecimal(sararyww);
+			sarary2.setScale(0, RoundingMode.HALF_UP);
+			Integer job = sarary2.intValue();
+			bean.setRegPeriod(job);
+		}else if (lassday.equals("48")) {
+			sararyww = ((((0.55 * aa) * bb) / 100) + bb) / aa;
+			BigDecimal sarary2 = new BigDecimal(sararyww);
+			sarary2.setScale(0, RoundingMode.HALF_UP);
+			Integer job = sarary2.intValue();
+			bean.setRegPeriod(job);
+		}else if (lassday.equals("60")) {
+			sararyww = ((((0.55 * aa) * bb) / 100) + bb) / aa;
+			BigDecimal sarary2 = new BigDecimal(sararyww);
+		sarary2.setScale(0, RoundingMode.HALF_UP);
+			Integer job = sarary2.intValue();
+			bean.setRegPeriod(job);
+		}
+		
+		
+		
 		try {
-			
+		
 			bean.setRegBankname(bankName);
 			bean.setRegFirstname(firstName);
 			bean.setRegLastname(lastName);
@@ -75,6 +115,7 @@ public class RegisterController {
 			bean.setRegStatusmember("1");
 			bean.setRegLat(lat);
 			bean.setRegLog(log);
+		
 			
 			
 		} catch (Exception e) {

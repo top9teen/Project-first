@@ -17,6 +17,7 @@ import com.bru.dao.CarDao;
 import com.bru.dao.CustomerDao;
 import com.bru.dao.HistoryDao;
 import com.bru.dao.MenberDao;
+import com.bru.dao.PorepaidhistoryDao;
 import com.bru.dao.RegisterDao;
 import com.bru.dao.UserAllDao;
 import com.bru.dao.UsertableDao;
@@ -26,11 +27,13 @@ import com.bru.model.KasikornPriceBean;
 import com.bru.model.KrungsriPriceBean;
 import com.bru.model.MoneyBean;
 import com.bru.model.MsgadminBean;
+import com.bru.model.PorepaidhistoryBean;
 import com.bru.model.RegisterallBean;
 import com.bru.model.RegnameBean;
 import com.bru.model.ScbeasyPriceBean;
 import com.bru.model.SimBean;
 import com.bru.model.ThanachartPriceBean;
+import com.bru.model.TransfermoneyBean;
 import com.bru.model.UserAllBean;
 
 @Controller
@@ -49,7 +52,8 @@ public class WelcomeController {
 	UsertableDao usertableDao;
 	@Autowired
 	HistoryDao historyDao;
-
+	@Autowired
+	PorepaidhistoryDao porepaidhistoryDao;
 	String uu = "";
 	String fname, lname;
 	String imgall = "";
@@ -639,11 +643,13 @@ public class WelcomeController {
 	public String gotolistcar2(Model model, HttpServletRequest requst) throws SQLException {
 		List<RegisterallBean> list = new ArrayList<>();
 		list = usertableDao.findallist2(uu);
-
+		AmountBean bean2 = new AmountBean();
 		requst.getSession().setAttribute("listUser", list);
+		bean2 = userAllDao.FillPoint(email);
 		model.addAttribute("box", "");
 		model.addAttribute("msg", "10");
 		model.addAttribute("gg", "");
+		requst.getSession().setAttribute("amo88", bean2);
 		return "welcome";
 	}
 
@@ -831,13 +837,14 @@ public class WelcomeController {
 	@RequestMapping("/gototabel56")
 	public String gototabel56(Model model, String name, HttpServletRequest requst) throws SQLException {
 		name = uu;
+		AmountBean bb = new AmountBean();
 		List<RegisterallBean> list = new ArrayList<>();
 
 		list = menberDao.listuserv65(name);
-
+		bb = userAllDao.FillPoint(uu);
 		requst.getSession().setAttribute("listUser", list);
 		model.addAttribute("se", "56");
-
+		requst.getSession().setAttribute("amo88", bb);
 		model.addAttribute("head", "2");
 		model.addAttribute("dd", "");
 		return "welcomeMember";
@@ -943,7 +950,7 @@ public class WelcomeController {
 	public String FillPoint(Model model, HttpServletRequest res) throws SQLException {
 		AmountBean bb = new AmountBean();
 		try {
-			bb = userAllDao.FillPoint(email);
+			 bb = userAllDao.FillPoint(email);
 			model.addAttribute("box", "");
 			model.addAttribute("msg", "11");
 			model.addAttribute("gg", "");
@@ -959,6 +966,7 @@ public class WelcomeController {
 	public String gotomon(Model model, String vvvs, Long money, HttpServletRequest res) throws SQLException {
 		AmountBean bb = new AmountBean();
 		MoneyBean vos = new MoneyBean();
+		PorepaidhistoryBean mose = new PorepaidhistoryBean();
 		int slar;
 		try {
 			vos = userAllDao.gotomon(vvvs);
@@ -968,10 +976,15 @@ public class WelcomeController {
 			if (vos.getMoStaus().equals("2") || vos.getMoStaus() == null) {
 
 			} else if (vos.getMoStaus().equals("1")) {
+				mose.setPh_date(new Date());
+				mose.setPh_email(email);
+				mose.setPh_idcard(vvvs);
+				String sor = Integer.toString(vos.getMoMoney());
+				mose.setPh_money(sor);
+				porepaidhistoryDao.porepaidhistory(mose);
 				slar = vos.getMoMoney() + bb.getAmMoney();
 				menberDao.gotomon2(email, slar);
 				menberDao.gotomon3(vvvs);
-				System.out.println(slar);
 
 			}
 			bb = userAllDao.FillPoint(email);
@@ -986,10 +999,10 @@ public class WelcomeController {
 		model.addAttribute("msg", "11");
 		return "welcome";
 	}
-	
-	
+
 	@RequestMapping("/gotomsg123")
-	public String gotomsg123(Model model, HttpServletRequest res ,String email ,String msghard ,String msgbody) throws SQLException {
+	public String gotomsg123(Model model, HttpServletRequest res, String email, String msghard, String msgbody)
+			throws SQLException {
 		MsgadminBean bb = new MsgadminBean();
 		bb.setMsName(email);
 		bb.setMsDate(new Date());
@@ -997,13 +1010,142 @@ public class WelcomeController {
 		bb.setMsMsghard(msghard);
 		try {
 			menberDao.dsdadsa(bb);
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
 		return "admin/adminsel12";
 	}
+
+	@RequestMapping("/msgadminemail")
+	public String msgadminemail(HttpServletRequest res, Model model) throws SQLException {
+		List<MsgadminBean> list = new ArrayList<>();
+
+		list = menberDao.listmsgww(email);
+
+		res.getSession().setAttribute("listUser", list);
+		model.addAttribute("msg", "123");
+		model.addAttribute("box", "");
+		return "welcome";
+	}
+
+	@RequestMapping("/gotomsguser")
+	public String msggsss(Model model, String name, String msghard, String msgbody) {
+		name = email;
+		MsgadminBean bean = new MsgadminBean();
+		bean.setMsName(name);
+		bean.setMsMsgbody(msgbody);
+		bean.setMsMsghard(msghard);
+		bean.setMsDate(new Date());
+		try {
+
+			menberDao.sssss(bean);
+			model.addAttribute("se", "5");
+			model.addAttribute("dd", "L");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		model.addAttribute("msg", "123");
+		model.addAttribute("box", "");
+		return "welcome";
+	}
+
+	@RequestMapping("/gotomsguser2")
+	public String gotomsguser2(Model model, String name, String msghard, String msgbody, String email22,
+			HttpServletRequest res, String mos) throws SQLException {
+		AmountBean bb = new AmountBean();
+		name = email;
+		bb = userAllDao.FillPoint(uu);
+		MsgadminBean bean = new MsgadminBean();
+		bean.setMsName(name);
+		bean.setMsMsgbody(msgbody);
+		bean.setMsMsghard(msghard);
+		bean.setMsEmail(email22);
+		bean.setMsDate(new Date());
+		List<RegisterallBean> list = new ArrayList<>();
+		try {
+
+			menberDao.sssssss(bean);
+			model.addAttribute("se", "5");
+			model.addAttribute("dd", "L");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		mos = uu;
+
+		list = menberDao.listuserv65(mos);
+
+		res.getSession().setAttribute("listUser", list);
+		model.addAttribute("se", "56");
+		res.getSession().setAttribute("amo88", bb);
+		model.addAttribute("head", "2");
+		model.addAttribute("dd", "");
+		return "welcomeMember";
+	}
+
+	@RequestMapping(value = "gotoprind", method = RequestMethod.POST)
+	public String gotoprind(Model model, HttpServletRequest res, String regid) throws SQLException {
+		RegisterallBean bean = new RegisterallBean();
+		AmountBean bean2 = new AmountBean();
+		List<RegisterallBean> list = new ArrayList<>();
+		TransfermoneyBean boms = new TransfermoneyBean();
+		
+		int hh;
+		int hh2;
+		
+		try {
+			bean = registerDao.sel(regid);
+			bean2 = historyDao.amo(email);
+			int vv = Integer.parseInt(bean.getRegLessdayformy());
+			if (bean2.getAmMoney() >= bean.getRegPeriod()) {
+
+				hh = bean2.getAmMoney() - bean.getRegPeriod();
+				hh2 = hh;
+
+				historyDao.gotomon2da(email, hh2);
+				vv = vv - 1;
+				if (vv > 0) {
+
+					String voa = String.valueOf(vv);
+					registerDao.updateddsd(voa, regid);
+
+				} else if (vv <= 0) {
+					registerDao.updateddsssd(regid);
+
+				}
+				//
+
+				bean2 = historyDao.amo(bean.getRegBankname());
+
+				historyDao.gotomon2da(bean.getRegBankname(), bean2.getAmMoney() + bean.getRegPeriod());
+				boms.setTrDate(new Date());
+				boms.setTrEmailmember(bean.getRegBankname());
+				boms.setTrEmailuser(email);
+				String sd = String.valueOf(bean.getRegPeriod());
+				boms.setTrEonney(sd);
+				historyDao.transfmoney(boms);
+				model.addAttribute("box", "L2");
+			} else {
+				model.addAttribute("box", "F2");
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		bean2 = userAllDao.FillPoint(email);
+		list = usertableDao.findallist2(uu);
+
+		res.getSession().setAttribute("listUser", list);
+		model.addAttribute("msg", "10");
+		model.addAttribute("gg", "");
+		res.getSession().setAttribute("amo88", bean2);
+		return "welcome";
+	}
+
 	// end class
 }
 
